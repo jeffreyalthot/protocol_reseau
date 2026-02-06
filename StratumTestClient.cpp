@@ -199,7 +199,8 @@ double StratumTestClient::shareIntervalSeconds() const {
     constexpr long double two32 = 4294967296.0L;
     const long double hashesPerSecond = cfg_.advertisedHashrateEh * 1'000'000'000'000'000'000.0L;
     const long double seconds = (cfg_.syntheticShareDifficulty * two32) / hashesPerSecond;
-    return std::max(0.001L, seconds);
+    const long double boundedSeconds = std::max(0.001L, seconds);
+    return static_cast<double>(boundedSeconds);
 }
 
 void StratumTestClient::runSyntheticSubmitLoop() {
